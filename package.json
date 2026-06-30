@@ -1,0 +1,6 @@
+{
+  "name": "vercel-wechat-bridge",
+  "version": "1.0.0",
+  "description": "RedFox WeChat Webhook Bridge on Vercel",
+  "private": true
+}
