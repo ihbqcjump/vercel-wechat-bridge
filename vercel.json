@@ -1,11 +1,4 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
-    }
-  ],
   "routes": [
     {
       "src": "/wechat(.*)",
@@ -13,6 +6,10 @@
     },
     {
       "src": "/health",
+      "dest": "/api/health"
+    },
+    {
+      "src": "/(.*)",
       "dest": "/api/health"
     }
   ]
