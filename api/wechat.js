@@ -27,7 +27,22 @@ module.exports = async (req, res) => {
   // POST: 转发微信消息到源站
   if (req.method === 'POST') {
     try {
-      const xmlBody = typeof req.body === 'string' ? req.body : JSON.stringify(req.body);
+      // Vercel @vercel/node: read raw body for non-JSON content types
+      let xmlBody;
+      if (typeof req.body === 'string') {
+        xmlBody = req.body;
+      } else if (req.body && typeof req.body === 'object' && Buffer.isBuffer(req.body)) {
+        xmlBody = req.body.toString('utf-8');
+      } else if (req.body && typeof req.body === 'object') {
+        // Fallback: might be a parsed object or {type:'Buffer',data:[...]}
+        if (req.body.type === 'Buffer' && Array.isArray(req.body.data)) {
+          xmlBody = Buffer.from(req.body.data).toString('utf-8');
+        } else {
+          xmlBody = JSON.stringify(req.body);
+        }
+      } else {
+        xmlBody = '';
+      }
       
       const response = await fetch(`${ORIGIN_URL}/wechat`, {
         method: 'POST',
