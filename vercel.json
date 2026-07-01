@@ -5,6 +5,10 @@
       "dest": "/api/wechat$1"
     },
     {
+      "src": "/go",
+      "dest": "/api/go"
+    },
+    {
       "src": "/health",
       "dest": "/api/health"
     },
